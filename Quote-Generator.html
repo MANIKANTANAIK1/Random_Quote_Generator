@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Quote Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ffecd2, #fcb69f);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        #container {
+            width: 450px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+        #container:hover {
+            transform: scale(1.05);
+        }
+        h1 {
+            font-size: 2.2em;
+            margin-bottom: 20px;
+            color: #ff6347;
+        }
+        #quoteBox {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-left: 4px solid #ff6347;
+            background-color: #f9f9f9;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        #author {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        #button {
+            margin-top: 20px;
+        }
+        button {
+            background-color: #ff6347;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #ff4500;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="h1"><h1>Random Quote Generator</h1></div>
+        <div id="quoteBox"></div>
+        <div id="author"></div>
+        <div id="button"><button onclick="getquote()">Get Random Quote</button></div>
+    </div>
+    <script>
+        async function getquote() {
+            let quoteBox = document.getElementById("quoteBox");
+            let author = document.getElementById("author");
+            quoteBox.style.opacity = 0;
+            let quote = await fetch(
+                "http://api.quotable.io/random"
+            );
+            let data = await quote.json();
+            quoteBox.textContent = `"${data.content}"`;
+            author.textContent = `- ${data.author}`;
+            quoteBox.style.opacity = 1;
+        }
+    </script>
+</body>
+</html>
